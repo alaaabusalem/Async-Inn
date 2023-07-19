@@ -16,3 +16,7 @@ is a table represent the many to many relation between aminity table and room ta
 
 ## room_look (layout) table
 it is represent the room layout design with attributes: id, name
+
+# Lab-12
+
+I started creat the app by creat a connection between the ap.net app and sql database using the Entity frameworke core. 
