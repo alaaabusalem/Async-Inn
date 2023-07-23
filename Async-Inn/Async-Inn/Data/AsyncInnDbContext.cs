@@ -30,7 +30,7 @@ namespace Async_Inn.Data
 			modelBuilder.Entity<Amenity>().HasData(
 				new Amenity() { Id = 1, Name = "Coffee Maker" },
 				new Amenity() { Id = 2, Name = "Overlooking the sea" },
-				new Amenity() { Id = 3, Name = "Air Conditioner\r\n" }
+				new Amenity() { Id = 3, Name = "Air Conditioner" }
 				);
 		}
 	}
