@@ -20,3 +20,6 @@ it is represent the room layout design with attributes: id, name
 # Lab-12
 
 I started creat the app by creat a connection between the ap.net app and sql database using the Entity frameworke core. 
+
+# Lab-13
+I used the Dependency Injection and Repository design pattern to update the project.
