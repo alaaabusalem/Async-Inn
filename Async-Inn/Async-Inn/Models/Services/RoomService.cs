@@ -41,14 +41,9 @@ namespace Async_Inn.Models.Services
 
 		public async Task<Room> UpdateRoom(int id, Room room)
 		{
-			var roomToupdate = await _context.Rooms.FindAsync(room.Id);
-
-			if(roomToupdate != null)
-			{
-				_context.Rooms.Update(room);
-				await _context.SaveChangesAsync();return room;
-			}
-			return null;
+			_context.Entry(room).State = EntityState.Modified;
+			await _context.SaveChangesAsync();
+			return room;
 		}
 	}
 }

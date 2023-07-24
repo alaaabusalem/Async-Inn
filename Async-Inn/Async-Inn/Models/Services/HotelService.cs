@@ -42,13 +42,9 @@ namespace Async_Inn.Models.Services
 
 		public async Task<Hotel> UpdateHotel(int id, Hotel hotel)
 		{
-			var hote = await _context.Hotels.FindAsync(id);
-			if(hotel != null) {
-				_context.Hotels.Update(hotel);
-			  await _context.SaveChangesAsync();
-				return hotel;
-			}
-			return null;
+           _context.Entry(hotel).State = EntityState.Modified;
+			await _context.SaveChangesAsync();
+			return hotel;
 		}
 	}
 }
