@@ -16,5 +16,11 @@
 
 		// DELETE
 		Task Delete(int id);
+
+		// Add Amenity to your room
+		Task<Room> AddAmenityToRoom(int roomId, int amenityId);
+
+		// Remove Amenity from your room
+		Task<Room> RemoveAmentityFromRoom(int roomId, int amenityId);
 	}
 }

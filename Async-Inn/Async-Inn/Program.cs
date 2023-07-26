@@ -21,6 +21,7 @@ namespace Async_Inn
 			builder.Services.AddTransient<IHotel, HotelService>();
 			builder.Services.AddTransient<IRoom, RoomService>();
 			builder.Services.AddTransient<IAmenity, AmenityService>();
+			builder.Services.AddTransient<IRoomAmenity, RoomAmenityService>();
 			var app = builder.Build();
 			app.MapControllers();
 

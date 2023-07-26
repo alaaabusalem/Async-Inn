@@ -1,4 +1,5 @@
-﻿using Async_Inn.Models;
+﻿using System.Reflection.Metadata;
+using Async_Inn.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Async_Inn.Data
@@ -12,6 +13,9 @@ namespace Async_Inn.Data
         public DbSet<Hotel> Hotels { get; set; }
 		public DbSet<Room> Rooms { get; set; }
 		public DbSet<Amenity> Amenities { get; set; }
+		public DbSet<RoomAmenity> RoomAmenities { get; set; }
+
+		public DbSet<HotelRoom> HotelRoom{ get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -32,6 +36,21 @@ namespace Async_Inn.Data
 				new Amenity() { Id = 2, Name = "Overlooking the sea" },
 				new Amenity() { Id = 3, Name = "Air Conditioner" }
 				);
+
+			modelBuilder.Entity<RoomAmenity>().HasKey(
+				roomamenity=> new { roomamenity.RoomId, roomamenity.AmenityId}
+			);
+
+
+		
+
+
+
+
+
+			//modelBuilder.Entity<HotelRoom>().HasKey(
+			//		hotelroom => new { hotelroom.RoomNumber, hotelroom.HotelId }
+			//		);
 		}
 	}
 }
