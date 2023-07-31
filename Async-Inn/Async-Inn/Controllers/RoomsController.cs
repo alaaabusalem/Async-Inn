@@ -73,8 +73,18 @@ namespace Async_Inn.Controllers
 			return CreatedAtAction("GetRoom", new { id = room.Id }, room);
 		}
 
-        // DELETE: api/Rooms/5
-        [HttpDelete("{id}")]
+		[Route("{roomId}/Amenity/{amenityId}")]
+		[HttpPost]
+		public async Task<ActionResult<Room>> PostRoomAmenity(int roomId, int amenityId)
+		{
+			var room=await _Room.AddAmenityToRoom(roomId, amenityId);
+
+			// Rurtn a 201 Header to Browser or the postmane
+			return CreatedAtAction("GetRoom", new { id = room.Id }, room);
+
+		}
+		// DELETE: api/Rooms/5
+		[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoom(int id)
         {
 			await _Room.Delete(id);
@@ -82,6 +92,14 @@ namespace Async_Inn.Controllers
 			return NoContent();
 		}
 
-      
-    }
+		[Route("{roomId}/Amenity/{amenityId}")]
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> RemoveAmentityFromRoom(int roomId, int amenityId)
+		{
+			await _Room.RemoveAmentityFromRoom(roomId,amenityId);
+
+			return NoContent();
+		}
+	}
 }
