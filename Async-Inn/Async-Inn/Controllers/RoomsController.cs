@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
+using Async_Inn.Models.DTOs;
 
 namespace Async_Inn.Controllers
 {
@@ -15,18 +16,18 @@ namespace Async_Inn.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly IRoom _Room;
+		private readonly IRoom _Room;
 
-        public RoomsController(IRoom room)
-        {
+		public RoomsController(IRoom room)
+		{
 			_Room = room;
-        }
+		}
 
-        // GET: api/Rooms
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
-        {
-            var Rooms = await _Room.GetRooms();
+		// GET: api/Rooms
+		[HttpGet]
+		public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms()
+		{
+			var Rooms = await _Room.GetRooms();
 			if (Rooms == null)
 			{
 				return NotFound();
@@ -34,10 +35,10 @@ namespace Async_Inn.Controllers
 			return Rooms;
 		}
 
-        // GET: api/Rooms/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Room>> GetRoom(int id)
-        {
+		// GET: api/Rooms/5
+		[HttpGet("{id}")]
+		public async Task<ActionResult<RoomDTO>> GetRoom(int id)
+		{
 			var room = await _Room.GetRoom(id);
 			if (room == null)
 			{
@@ -47,12 +48,12 @@ namespace Async_Inn.Controllers
 			return room;
 		}
 
-        // PUT: api/Rooms/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoom(int id, Room room)
-        {
-			if (id != room.Id)
+		// PUT: api/Rooms/5
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPut("{id}")]
+		public async Task<IActionResult> PutRoom(int id, RoomDTO room)
+		{
+			if (id != room.ID)
 			{
 				return BadRequest();
 			}
@@ -62,31 +63,31 @@ namespace Async_Inn.Controllers
 
 		}
 
-        // POST: api/Rooms
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Room>> PostRoom(Room room)
-        {
+		// POST: api/Rooms
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPost]
+		public async Task<ActionResult<Room>> PostRoom(RoomDTO room)
+		{
 			await _Room.Create(room);
 
 			// Rurtn a 201 Header to Browser or the postmane
-			return CreatedAtAction("GetRoom", new { id = room.Id }, room);
+			return CreatedAtAction("GetRoom", new { id = room.ID }, room);
 		}
 
 		[Route("{roomId}/Amenity/{amenityId}")]
 		[HttpPost]
-		public async Task<ActionResult<Room>> PostRoomAmenity(int roomId, int amenityId)
+		public async Task<ActionResult<RoomDTO>> PostRoomAmenity(int roomId, int amenityId)
 		{
-			var room=await _Room.AddAmenityToRoom(roomId, amenityId);
+			var room = await _Room.AddAmenityToRoom(roomId, amenityId);
 
 			// Rurtn a 201 Header to Browser or the postmane
-			return CreatedAtAction("GetRoom", new { id = room.Id }, room);
+			return CreatedAtAction("GetRoom", new { id = room.ID }, room);
 
 		}
 		// DELETE: api/Rooms/5
 		[HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRoom(int id)
-        {
+		public async Task<IActionResult> DeleteRoom(int id)
+		{
 			await _Room.Delete(id);
 
 			return NoContent();
@@ -97,7 +98,7 @@ namespace Async_Inn.Controllers
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> RemoveAmentityFromRoom(int roomId, int amenityId)
 		{
-			await _Room.RemoveAmentityFromRoom(roomId,amenityId);
+			await _Room.RemoveAmentityFromRoom(roomId, amenityId);
 
 			return NoContent();
 		}

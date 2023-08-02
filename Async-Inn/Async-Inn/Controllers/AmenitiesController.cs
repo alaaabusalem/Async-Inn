@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
+using Async_Inn.Models.DTOs;
 
 namespace Async_Inn.Controllers
 {
@@ -15,17 +16,17 @@ namespace Async_Inn.Controllers
     [ApiController]
     public class AmenitiesController : ControllerBase
     {
-        private readonly IAmenity _amenity;
+		private readonly IAmenity _amenity;
 
-        public AmenitiesController(IAmenity amenity)
-        {
+		public AmenitiesController(IAmenity amenity)
+		{
 			_amenity = amenity;
-        }
+		}
 
-        // GET: api/Amenities
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Amenity>>> GetAmenities()
-        {
+		// GET: api/Amenities
+		[HttpGet]
+		public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
+		{
 			var amenties = await _amenity.GetAmenities();
 			if (amenties == null)
 			{
@@ -34,10 +35,10 @@ namespace Async_Inn.Controllers
 			return amenties;
 		}
 
-        // GET: api/Amenities/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Amenity>> GetAmenity(int id)
-        {
+		// GET: api/Amenities/5
+		[HttpGet("{id}")]
+		public async Task<ActionResult<AmenityDTO>> GetAmenity(int id)
+		{
 			var amenity = await _amenity.GetAmenity(id);
 			if (amenity == null)
 			{
@@ -47,38 +48,38 @@ namespace Async_Inn.Controllers
 			return amenity;
 		}
 
-        // PUT: api/Amenities/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAmenity(int id, Amenity amenity)
-        {
-			if (id != amenity.Id)
+		// PUT: api/Amenities/5
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPut("{id}")]
+		public async Task<IActionResult> PutAmenity(int id, AmenityDTO amenity)
+		{
+			if (id != amenity.ID)
 			{
 				return BadRequest();
 			}
-			var updatedAmenity = await _amenity.UpdateAmenity(id,amenity);
+			var updatedAmenity = await _amenity.UpdateAmenity(id, amenity);
 			return Ok(updatedAmenity);
 
 		}
 
-        // POST: api/Amenities
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Amenity>> PostAmenity(Amenity amenity)
-        {
+		// POST: api/Amenities
+		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		[HttpPost]
+		public async Task<ActionResult<AmenityDTO>> PostAmenity(AmenityDTO amenity)
+		{
 			await _amenity.Create(amenity);
 
 			// Rurtn a 201 Header to Browser or the postmane
-			return CreatedAtAction("GetAmenity", new { id = amenity.Id }, amenity);
+			return CreatedAtAction("GetAmenity", new { id = amenity.ID }, amenity);
 		}
 
-        // DELETE: api/Amenities/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAmenity(int id)
-        {
+		// DELETE: api/Amenities/5
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteAmenity(int id)
+		{
 			await _amenity.Delete(id);
 
 			return NoContent();
 		}
-    }
+	}
 }

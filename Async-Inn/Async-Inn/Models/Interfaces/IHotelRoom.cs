@@ -1,18 +1,20 @@
-﻿namespace Async_Inn.Models.Interfaces
+﻿using Async_Inn.Models.DTOs;
+
+namespace Async_Inn.Models.Interfaces
 {
 	public interface IHotelRoom
 	{
 
-		Task<HotelRoom> Create(HotelRoom hotelRoom,int HotelId);
+		Task<HotelRoomDTO> Create(HotelRoomDTO hotelRoom, int HotelId);
 
 		// GET ALL
-		Task<List<HotelRoom>> GetHotelRooms(int hotelId);
+		Task<List<HotelRoomDTO>> GetHotelRooms(int hotelId);
 
 		// GET ONE BY ID
-		Task<HotelRoom> GetHotelRoom(int hotelId,int roomNumber);
+		Task<HotelRoomDTO> GetHotelRoom(int hotelId, int roomNumber);
 
 		// UPDATE
-		Task<HotelRoom> UpdateHotelRoom(int hotelId, int roomNumber, HotelRoom hotelRoom);
+		Task<HotelRoomDTO> UpdateHotelRoom(int hotelId, int roomNumber, HotelRoomDTO hotelRoom);
 
 		// DELETE
 		Task Delete(int hotelId, int roomNumber);
