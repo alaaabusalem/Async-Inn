@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
-using Async_Inn.Models.DTOs;
 
 namespace Async_Inn.Controllers
 {
@@ -25,7 +24,7 @@ namespace Async_Inn.Controllers
 
         // GET: api/Rooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms()
+        public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
         {
             var Rooms = await _Room.GetRooms();
 			if (Rooms == null)
@@ -37,7 +36,7 @@ namespace Async_Inn.Controllers
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RoomDTO>> GetRoom(int id)
+        public async Task<ActionResult<Room>> GetRoom(int id)
         {
 			var room = await _Room.GetRoom(id);
 			if (room == null)
@@ -51,9 +50,9 @@ namespace Async_Inn.Controllers
         // PUT: api/Rooms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoom(int id, RoomDTO room)
+        public async Task<IActionResult> PutRoom(int id, Room room)
         {
-			if (id != room.ID)
+			if (id != room.Id)
 			{
 				return BadRequest();
 			}
@@ -66,22 +65,22 @@ namespace Async_Inn.Controllers
         // POST: api/Rooms
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Room>> PostRoom(RoomDTO room)
+        public async Task<ActionResult<Room>> PostRoom(Room room)
         {
 			await _Room.Create(room);
 
 			// Rurtn a 201 Header to Browser or the postmane
-			return CreatedAtAction("GetRoom", new { id = room.ID }, room);
+			return CreatedAtAction("GetRoom", new { id = room.Id }, room);
 		}
 
 		[Route("{roomId}/Amenity/{amenityId}")]
 		[HttpPost]
-		public async Task<ActionResult<RoomDTO>> PostRoomAmenity(int roomId, int amenityId)
+		public async Task<ActionResult<Room>> PostRoomAmenity(int roomId, int amenityId)
 		{
 			var room=await _Room.AddAmenityToRoom(roomId, amenityId);
 
 			// Rurtn a 201 Header to Browser or the postmane
-			return CreatedAtAction("GetRoom", new { id = room.ID }, room);
+			return CreatedAtAction("GetRoom", new { id = room.Id }, room);
 
 		}
 		// DELETE: api/Rooms/5
