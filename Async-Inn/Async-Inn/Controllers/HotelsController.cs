@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
+using Async_Inn.Models.DTOs;
 
 namespace Async_Inn.Controllers
 {
@@ -25,7 +26,7 @@ namespace Async_Inn.Controllers
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
+        public async Task<ActionResult<IEnumerable<HotelDTO>>> GetHotels()
         {
             var hotels= await _hotel.GetHotels();   
           if (hotels == null)
@@ -37,7 +38,7 @@ namespace Async_Inn.Controllers
 
         // GET: api/Hotels/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(int id)
+        public async Task<ActionResult<HotelDTO>> GetHotel(int id)
         {
             var hotel = await _hotel.GetHotel(id);
           if (hotel == null)
@@ -51,15 +52,15 @@ namespace Async_Inn.Controllers
         // PUT: api/Hotels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotel(int id, Hotel hotel)
+        public async Task<IActionResult> PutHotel(int id, HotelDTO hotelDTO)
         {
 
-           if( id != hotel.Id)
+           if( id != hotelDTO.ID)
             {
 				return BadRequest();
 			}
-           var updatedHotel = await _hotel.UpdateHotel(id, hotel);
-            return Ok(updatedHotel);
+           var updatedHotelDTO = await _hotel.UpdateHotel(id, hotelDTO);
+            return Ok(updatedHotelDTO);
 
             
         }
