@@ -24,7 +24,28 @@ namespace Async_Inn
 			builder.Services.AddTransient<IRoom, RoomService>();
 			builder.Services.AddTransient<IAmenity, AmenityService>();
 			builder.Services.AddTransient<IHotelRoom, HotelRoomService>();
+
+			builder.Services.AddSwaggerGen(options =>
+			{
+				options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+				{
+					Title = "Async Inn API",
+					Version = "v1",
+				});
+			});
+
 			var app = builder.Build();
+
+			app.UseSwagger(options =>
+			{
+				options.RouteTemplate = "/api/{documentName}/swagger.json";
+			});
+
+			app.UseSwaggerUI(options =>
+			{
+				options.SwaggerEndpoint("/api/v1/swagger.json", "Async Inn API");
+				options.RoutePrefix = "docs";
+			});
 			app.MapControllers();
 
 			app.MapGet("/", () => "Hello World!");

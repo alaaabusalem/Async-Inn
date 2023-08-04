@@ -15,6 +15,12 @@ namespace Async_Inn.Models.Services
 			_context = context;
 		}
 
+		/// <summary>
+		/// add Amenity to an existing room
+		/// </summary>
+		/// <param name="roomId"></param>
+		/// <param name="amenityId"></param>
+		/// <returns></returns>
 		public async Task<RoomDTO> AddAmenityToRoom(int roomId, int amenityId)
 		{
 			var room = await GetRoom(roomId);
@@ -33,6 +39,11 @@ namespace Async_Inn.Models.Services
 			return roomDTO;
 		}
 
+		/// <summary>
+		/// add a new room
+		/// </summary>
+		/// <param name="room"></param>
+		/// <returns></returns>
 		public async Task<RoomDTO> Create(RoomDTO room)
 		{
 			var roomToadd = new Room
@@ -45,6 +56,12 @@ namespace Async_Inn.Models.Services
 			return room;
 		}
 
+
+		/// <summary>
+		/// delete an existing room
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public async Task Delete(int id)
 		{
 			var room = await _context.Rooms.FindAsync(id);
@@ -55,6 +72,11 @@ namespace Async_Inn.Models.Services
 			}
 		}
 
+		/// <summary>
+		/// return a room by Id
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public async Task<RoomDTO> GetRoom(int id)
 		{
 			var room = await _context.Rooms.Select(R => new RoomDTO
@@ -73,6 +95,11 @@ namespace Async_Inn.Models.Services
 			return room;
 		}
 
+
+		/// <summary>
+		/// return all rooms
+		/// </summary>
+		/// <returns></returns>
 		public async Task<List<RoomDTO>> GetRooms()
 		{
 			var rooms = await _context.Rooms.Select(R => new RoomDTO
@@ -90,6 +117,12 @@ namespace Async_Inn.Models.Services
 			return rooms;
 		}
 
+		/// <summary>
+		/// remove an amentity exsisting in a room
+		/// </summary>
+		/// <param name="roomId"></param>
+		/// <param name="amenityId"></param>
+		/// <returns></returns>
 		public async Task RemoveAmentityFromRoom(int roomId, int amenityId)
 		{
 			var RoomAminity = await _context.RoomAmenities.FindAsync(roomId, amenityId);
@@ -100,6 +133,13 @@ namespace Async_Inn.Models.Services
 			}
 		}
 
+
+		/// <summary>
+		/// update an existing room
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="roomTDO"></param>
+		/// <returns></returns>
 		public async Task<RoomDTO> UpdateRoom(int id, RoomDTO roomTDO)
 		{
 			var room = await _context.Rooms.FirstAsync(R => R.Id == id);
