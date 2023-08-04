@@ -23,3 +23,6 @@ I started creat the app by creat a connection between the ap.net app and sql dat
 
 # Lab-13
 I used the Dependency Injection and Repository design pattern to update the project.
+
+# Lab-17
+finishing adding unit test for hotel service and HotelRoom service, also adding swagger UI
