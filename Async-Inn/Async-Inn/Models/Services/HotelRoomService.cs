@@ -13,6 +13,13 @@ namespace Async_Inn.Models.Services
 
 			_context = context;
 		}
+
+		/// <summary>
+		/// Add a room to a hotel
+		/// </summary>
+		/// <param name="hotelRoom"></param>
+		/// <param name="HotelId"></param>
+		/// <returns></returns>
 		public async Task<HotelRoomDTO> Create(HotelRoomDTO hotelRoom, int HotelId)
 		{
 			var Hotel = await _context.Hotels.FindAsync(HotelId);
@@ -39,6 +46,12 @@ namespace Async_Inn.Models.Services
 
 		}
 
+		/// <summary>
+		/// delete a room from a hotel
+		/// </summary>
+		/// <param name="hotelId"></param>
+		/// <param name="roomNumber"></param>
+		/// <returns></returns>
 		public async Task Delete(int hotelId, int roomNumber)
 		{
 			var hotelroom = await _context.HotelRooms
@@ -51,6 +64,12 @@ namespace Async_Inn.Models.Services
 			}
 		}
 
+		/// <summary>
+		/// return all hotels rooms
+		/// </summary>
+		/// <param name="hotelId"></param>
+		/// <param name="roomNumber"></param>
+		/// <returns></returns>
 		public async Task<HotelRoomDTO> GetHotelRoom(int hotelId, int roomNumber)
 		{
 			var Room = await _context.HotelRooms.Select(HR => new HotelRoomDTO
@@ -76,7 +95,12 @@ namespace Async_Inn.Models.Services
 		.FirstOrDefaultAsync(HR => HR.HotelID == hotelId && HR.RoomNumber == roomNumber);
 			return Room;
 		}
-
+		 
+		/// <summary>
+		/// return all hotel rooms
+		/// </summary>
+		/// <param name="hotelId"></param>
+		/// <returns></returns>
 		public async Task<List<HotelRoomDTO>> GetHotelRooms(int hotelId)
 		{
 			var Rooms = await _context.HotelRooms.Select(HR => new HotelRoomDTO
@@ -101,6 +125,13 @@ namespace Async_Inn.Models.Services
 			return Rooms;
 		}
 
+		/// <summary>
+		/// update an hotel room
+		/// </summary>
+		/// <param name="hotelId"></param>
+		/// <param name="roomNumber"></param>
+		/// <param name="hotelRoom"></param>
+		/// <returns></returns>
 		public async Task<HotelRoomDTO> UpdateHotelRoom(int hotelId, int roomNumber, HotelRoomDTO hotelRoom)
 		{
 

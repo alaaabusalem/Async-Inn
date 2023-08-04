@@ -95,7 +95,7 @@ namespace Async_Inn.Controllers
 
 		[Route("{roomId}/Amenity/{amenityId}")]
 
-		[HttpDelete("{id}")]
+		[HttpDelete]
 		public async Task<IActionResult> RemoveAmentityFromRoom(int roomId, int amenityId)
 		{
 			await _Room.RemoveAmentityFromRoom(roomId, amenityId);
