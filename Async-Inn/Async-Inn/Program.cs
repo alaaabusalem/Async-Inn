@@ -1,6 +1,8 @@
 using Async_Inn.Data;
+using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
 using Async_Inn.Models.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Async_Inn
@@ -19,7 +21,11 @@ namespace Async_Inn
 			builder.Services
 				.AddDbContext<AsyncInnDbContext>
 				(opions => opions.UseSqlServer(connString));
+			builder.Services.AddIdentity<User, IdentityRole>(options => {
+			options.User.RequireUniqueEmail = true;	
+			}).AddEntityFrameworkStores<AsyncInnDbContext>();
 
+			builder.Services.AddTransient<IUser, UserService>();
 			builder.Services.AddTransient<IHotel, HotelService>();
 			builder.Services.AddTransient<IRoom, RoomService>();
 			builder.Services.AddTransient<IAmenity, AmenityService>();
