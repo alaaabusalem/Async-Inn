@@ -26,3 +26,12 @@ I used the Dependency Injection and Repository design pattern to update the proj
 
 # Lab-17
 finishing adding unit test for hotel service and HotelRoom service, also adding swagger UI
+
+# Lab-18
+Identity refers to user identity and authentication. ASP.NET provides a robust framework for handling user authentication, authorization, and managing user identities. The primary mechanism for handling user identity in ASP.NET is through the ASP.NET Identity system
+I used this concept to register users and login
+### Register
+![](lab-18-1.png)
+
+### Login
+![](lab-18-2.png)
