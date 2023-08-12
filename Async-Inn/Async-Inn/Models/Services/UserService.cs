@@ -1,7 +1,9 @@
-﻿using Async_Inn.Models.DTOs;
+﻿using System.Security.Claims;
+using Async_Inn.Models.DTOs;
 using Async_Inn.Models.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+
 
 namespace Async_Inn.Models.Services
 {
@@ -9,9 +11,11 @@ namespace Async_Inn.Models.Services
 	{
 
 		private readonly UserManager<User> _userManager;
-        public UserService(UserManager<User> userManager)
+		private readonly JWTService jwtService;
+        public UserService(UserManager<User> userManager, JWTService jwtservice)
         {
             _userManager = userManager;
+			jwtService = jwtservice;
         }
         public async Task<UserDTO> Login(string password, string email)
 		{
@@ -20,7 +24,9 @@ namespace Async_Inn.Models.Services
 			if (checkPassword) {
 				return new UserDTO() { 
 				Id= user.Id,
-				Username= user.UserName
+				Username= user.UserName,
+				Token= await jwtService.GetToken(user, System.TimeSpan.FromMinutes(5)),
+				Roles= (List<string>)await _userManager.GetRolesAsync(user),	
 				};
 			}
 			return null;
@@ -39,10 +45,13 @@ namespace Async_Inn.Models.Services
 			var result = await _userManager.CreateAsync(user, registrationDTO.Password);
 
 			if (result.Succeeded) {
+				await _userManager.AddToRolesAsync(user, registrationDTO.Roles);
 				return new UserDTO()
 				{
 					Id= user.Id,
-					Username=user.UserName
+					Username=user.UserName,
+					Roles = (List<string>)await _userManager.GetRolesAsync(user),
+
 				};
 			}
 			foreach (var error in result.Errors)
@@ -56,5 +65,20 @@ namespace Async_Inn.Models.Services
 			}
 			return null;
 		}
+
+		public async Task<UserDTO> GetUser(ClaimsPrincipal principal)
+		{
+			var user = await _userManager.GetUserAsync(principal);
+			if(user== null) {
+				return null;
+			}
+			return new UserDTO
+			{
+				Id = user.Id,
+				Username = user.UserName,
+				//Token = await jwtService.GetToken(user, System.TimeSpan.FromMinutes(5))
+			};
+		}
+
 	}
 }

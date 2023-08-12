@@ -9,9 +9,11 @@ using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
 using Async_Inn.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Async_Inn.Controllers
 {
+	
     [Route("api/[controller]")]
     [ApiController]
     public class AmenitiesController : ControllerBase
@@ -24,10 +26,11 @@ namespace Async_Inn.Controllers
 		}
 
 		// GET: api/Amenities
+		
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAmenities()
 		{
-			var amenties = await _amenity.GetAmenities();
+		    var amenties = await _amenity.GetAmenities();
 			if (amenties == null)
 			{
 				return NotFound();
@@ -36,6 +39,7 @@ namespace Async_Inn.Controllers
 		}
 
 		// GET: api/Amenities/5
+		
 		[HttpGet("{id}")]
 		public async Task<ActionResult<AmenityDTO>> GetAmenity(int id)
 		{
@@ -50,6 +54,7 @@ namespace Async_Inn.Controllers
 
 		// PUT: api/Amenities/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		
 		[HttpPut("{id}")]
 		public async Task<IActionResult> PutAmenity(int id, AmenityDTO amenity)
 		{
@@ -64,6 +69,7 @@ namespace Async_Inn.Controllers
 
 		// POST: api/Amenities
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+		
 		[HttpPost]
 		public async Task<ActionResult<AmenityDTO>> PostAmenity(AmenityDTO amenity)
 		{
@@ -74,6 +80,7 @@ namespace Async_Inn.Controllers
 		}
 
 		// DELETE: api/Amenities/5
+		
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteAmenity(int id)
 		{

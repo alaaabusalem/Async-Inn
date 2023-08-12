@@ -2,6 +2,7 @@ using Async_Inn.Data;
 using Async_Inn.Models;
 using Async_Inn.Models.Interfaces;
 using Async_Inn.Models.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +31,30 @@ namespace Async_Inn
 			builder.Services.AddTransient<IRoom, RoomService>();
 			builder.Services.AddTransient<IAmenity, AmenityService>();
 			builder.Services.AddTransient<IHotelRoom, HotelRoomService>();
+			builder.Services.AddScoped<JWTService>();
+
+			builder.Services.AddAuthentication(options =>
+			{
+				options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			}).AddJwtBearer(options =>
+			{
+				// Tell the authenticaion scheme "how/where" to validate the token + secret
+				options.TokenValidationParameters = JWTService.GetValidationPerameters(builder.Configuration);
+			});
+
+			builder.Services.AddAuthorization(options =>
+			{
+				options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));
+				options.AddPolicy("update", policy => policy.RequireClaim("permissions", "update"));
+				options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete"));
+				options.AddPolicy("read", policy => policy.RequireClaim("permissions", "read"));
+
+			});
+
+			builder.Services.AddAuthorization();
+
 
 			builder.Services.AddSwaggerGen(options =>
 			{
@@ -41,6 +66,8 @@ namespace Async_Inn
 			});
 
 			var app = builder.Build();
+			app.UseAuthentication();
+			app.UseAuthorization();			
 
 			app.UseSwagger(options =>
 			{
